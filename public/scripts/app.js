@@ -54,11 +54,11 @@ var Options = function Options(props) {
             'Options'
         ),
         props.options.map(function (option, index) {
-            return React.createElement(Option, { key: index, taskName: option });
+            return React.createElement(Option, { key: index, option: option, onButtonClickDeleteTask: props.onButtonClickDeleteTask });
         }),
         React.createElement(
             'button',
-            { onClick: props.onButtonClickDelete },
+            { onClick: props.onButtonClickDeleteAll },
             'Remove All'
         )
     );
@@ -68,7 +68,14 @@ var Option = function Option(props) {
     return React.createElement(
         'div',
         null,
-        props.taskName
+        props.option,
+        React.createElement(
+            'button',
+            { onClick: function onClick() {
+                    return props.onButtonClickDeleteTask(props.option);
+                } },
+            'Remove'
+        )
     );
 };
 
@@ -135,20 +142,30 @@ var NoteApp = function (_React$Component2) {
 
         var _this2 = _possibleConstructorReturn(this, (NoteApp.__proto__ || Object.getPrototypeOf(NoteApp)).call(this, props));
 
-        _this2.onButtonClickDelete = _this2.onButtonClickDelete.bind(_this2);
+        _this2.onButtonClickDeleteAll = _this2.onButtonClickDeleteAll.bind(_this2);
         _this2.onButtonClickPick = _this2.onButtonClickPick.bind(_this2);
         _this2.onFormSubmitAddOption = _this2.onFormSubmitAddOption.bind(_this2);
+        _this2.onButtonClickDeleteTask = _this2.onButtonClickDeleteTask.bind(_this2);
         _this2.state = { options: [] };
         return _this2;
     }
 
     _createClass(NoteApp, [{
-        key: 'onButtonClickDelete',
-        value: function onButtonClickDelete() {
+        key: 'onButtonClickDeleteAll',
+        value: function onButtonClickDeleteAll() {
             this.setState(function () {
                 return {
                     options: []
                 };
+            });
+        }
+    }, {
+        key: 'onButtonClickDeleteTask',
+        value: function onButtonClickDeleteTask(option) {
+            this.setState(function (prevState) {
+                return { options: prevState.options.filter(function (opt) {
+                        return opt !== option;
+                    }) };
             });
         }
     }, {
@@ -165,7 +182,9 @@ var NoteApp = function (_React$Component2) {
             } else if (this.state.options.indexOf(option) > -1) {
                 return 'This task already exists';
             }
-            this.setState({ options: this.state.options.concat(option) });
+            this.setState(function (prevState) {
+                return { options: prevState.options.concat(option) };
+            });
         }
     }, {
         key: 'render',
@@ -177,7 +196,10 @@ var NoteApp = function (_React$Component2) {
                 null,
                 React.createElement(Header, { title: title, subTitle: subTitle }),
                 React.createElement(Action, { hasOptions: this.state.options.length > 0, onButtonClickPick: this.onButtonClickPick }),
-                React.createElement(Options, { options: this.state.options, onButtonClickDelete: this.onButtonClickDelete }),
+                React.createElement(Options, { options: this.state.options,
+                    onButtonClickDeleteAll: this.onButtonClickDeleteAll,
+                    onButtonClickDeleteTask: this.onButtonClickDeleteTask
+                }),
                 React.createElement(AddOption, { onFormSubmitAddOption: this.onFormSubmitAddOption })
             );
         }

@@ -31,9 +31,9 @@ const Options = (props) => {
         <div>
             <h2>Options</h2>
             {props.options.map((option, index) => {
-                return <Option key={index} taskName={option} />
+                return <Option key={index} option={option} onButtonClickDeleteTask={props.onButtonClickDeleteTask}/>
             })}
-            <button onClick={props.onButtonClickDelete}>Remove All</button>
+            <button onClick={props.onButtonClickDeleteAll}>Remove All</button>
         </div>
     )
 }
@@ -41,7 +41,10 @@ const Options = (props) => {
 
 const Option = (props) => {
     return (
-        <div>{props.taskName}</div>
+        <div>
+           {props.option}
+            <button onClick={() => props.onButtonClickDeleteTask(props.option)}>Remove</button>
+        </div>
     )
 }
 
@@ -79,17 +82,26 @@ class NoteApp extends React.Component {
 
     constructor (props) {
         super(props) 
-        this.onButtonClickDelete = this.onButtonClickDelete.bind(this)
+        this.onButtonClickDeleteAll = this.onButtonClickDeleteAll.bind(this)
         this.onButtonClickPick = this.onButtonClickPick.bind(this)
         this.onFormSubmitAddOption = this.onFormSubmitAddOption.bind(this)
-        this.state = { options: []}
+        this.onButtonClickDeleteTask = this.onButtonClickDeleteTask.bind(this)
+        this.state = { options: [] }
     }
 
-    onButtonClickDelete () {
+    onButtonClickDeleteAll () {
         this.setState(() => {
             return {
                 options: []
             }
+        })
+    }
+
+    onButtonClickDeleteTask (option) {
+        this.setState(prevState => {
+            return { options: prevState.options.filter(opt => {
+                return opt !== option
+            })}
         })
     }
 
@@ -104,7 +116,9 @@ class NoteApp extends React.Component {
         } else if (this.state.options.indexOf(option) > -1) {
             return 'This task already exists'
         }
-        this.setState({ options: this.state.options.concat(option) })
+        this.setState(prevState => {
+            return { options: prevState.options.concat(option) }
+        })
     }
 
     render () {
@@ -114,7 +128,10 @@ class NoteApp extends React.Component {
         <div>
             <Header title={title} subTitle={subTitle}/>
             <Action hasOptions={this.state.options.length > 0} onButtonClickPick={this.onButtonClickPick}/>
-            <Options options={this.state.options} onButtonClickDelete={this.onButtonClickDelete}/>
+            <Options options={this.state.options} 
+                        onButtonClickDeleteAll={this.onButtonClickDeleteAll}
+                            onButtonClickDeleteTask={this.onButtonClickDeleteTask}
+                                />
             <AddOption onFormSubmitAddOption={this.onFormSubmitAddOption}/>
         </div>
         )
