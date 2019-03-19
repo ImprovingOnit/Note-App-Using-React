@@ -131,19 +131,24 @@ var Option = function (_React$Component4) {
 var AddOption = function (_React$Component5) {
     _inherits(AddOption, _React$Component5);
 
-    function AddOption() {
+    function AddOption(props) {
         _classCallCheck(this, AddOption);
 
-        return _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).apply(this, arguments));
+        var _this5 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
+
+        _this5.onFormSubmit = _this5.onFormSubmit.bind(_this5);
+        _this5.state = { error: undefined };
+        return _this5;
     }
 
     _createClass(AddOption, [{
         key: "onFormSubmit",
         value: function onFormSubmit(e) {
             e.preventDefault();
-            if (e.target.elements.task.value) {
-                console.log('Hello World');
-            }
+            var value = e.target.elements.task.value.trim();
+            var error = this.props.onFormSubmitAddOption(value);
+            e.target.elements.task.value = '';
+            this.setState({ error: error });
         }
     }, {
         key: "render",
@@ -155,6 +160,11 @@ var AddOption = function (_React$Component5) {
                     "h3",
                     null,
                     "Add Options"
+                ),
+                this.state.error && React.createElement(
+                    "p",
+                    null,
+                    this.state.error
                 ),
                 React.createElement(
                     "form",
@@ -183,7 +193,8 @@ var NoteApp = function (_React$Component6) {
 
         _this6.onButtonClickDelete = _this6.onButtonClickDelete.bind(_this6);
         _this6.onButtonClickPick = _this6.onButtonClickPick.bind(_this6);
-        _this6.state = { options: ["Task1", "Task2", "Task3"] };
+        _this6.onFormSubmitAddOption = _this6.onFormSubmitAddOption.bind(_this6);
+        _this6.state = { options: [] };
         return _this6;
     }
 
@@ -203,6 +214,16 @@ var NoteApp = function (_React$Component6) {
             console.log(this.state.options[random]);
         }
     }, {
+        key: "onFormSubmitAddOption",
+        value: function onFormSubmitAddOption(option) {
+            if (!option) {
+                return 'Enter valid value to add item';
+            } else if (this.state.options.indexOf(option) > -1) {
+                return 'This task already exists';
+            }
+            this.setState({ options: this.state.options.concat(option) });
+        }
+    }, {
         key: "render",
         value: function render() {
             var title = "Welcome to Note App";
@@ -213,7 +234,7 @@ var NoteApp = function (_React$Component6) {
                 React.createElement(Header, { title: title, subTitle: subTitle }),
                 React.createElement(Action, { hasOptions: this.state.options.length > 0, onButtonClickPick: this.onButtonClickPick }),
                 React.createElement(Options, { options: this.state.options, onButtonClickDelete: this.onButtonClickDelete }),
-                React.createElement(AddOption, null)
+                React.createElement(AddOption, { onFormSubmitAddOption: this.onFormSubmitAddOption })
             );
         }
     }]);
