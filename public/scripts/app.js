@@ -171,6 +171,9 @@ var NoteApp = function (_React$Component2) {
             if (prevState.options.length < this.state.options.length) {
                 var json = JSON.stringify(this.state.options);
                 localStorage.setItem('options', json);
+            } else if (prevState.options.length > this.state.options.length) {
+                var _json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', _json);
             }
         }
     }, {
