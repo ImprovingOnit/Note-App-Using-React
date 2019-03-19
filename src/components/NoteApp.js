@@ -7,14 +7,7 @@ import Options from './Options'
 
 export default class NoteApp extends React.Component {
 
-    constructor (props) {
-        super(props) 
-        this.onButtonClickDeleteAll = this.onButtonClickDeleteAll.bind(this)
-        this.onButtonClickPick = this.onButtonClickPick.bind(this)
-        this.onFormSubmitAddOption = this.onFormSubmitAddOption.bind(this)
-        this.onButtonClickDeleteTask = this.onButtonClickDeleteTask.bind(this)
-        this.state = { options: [] }
-    }
+    state = { options: [] }
 
     componentDidMount () {
         const json = localStorage.getItem('options')
@@ -35,7 +28,7 @@ export default class NoteApp extends React.Component {
         }
     }
 
-    onButtonClickDeleteAll () {
+    onButtonClickDeleteAll = () => {
         this.setState(() => {
             return {
                 options: []
@@ -43,7 +36,7 @@ export default class NoteApp extends React.Component {
         })
     }
 
-    onButtonClickDeleteTask (option) {
+    onButtonClickDeleteTask = (option) => {
         this.setState(prevState => {
             return { options: prevState.options.filter(opt => {
                 return opt !== option
@@ -51,12 +44,12 @@ export default class NoteApp extends React.Component {
         })
     }
 
-    onButtonClickPick () {
+    onButtonClickPick = () => {
         const random = Math.floor((Math.random() * this.state.options.length)) 
         console.log(this.state.options[random])
     }
 
-    onFormSubmitAddOption (option) {
+    onFormSubmitAddOption = (option) => {
         if (!option) {
             return 'Enter valid value to add item'
         } else if (this.state.options.indexOf(option) > -1) {
