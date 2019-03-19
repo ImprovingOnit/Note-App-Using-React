@@ -53,6 +53,11 @@ var Options = function Options(props) {
             null,
             'Options'
         ),
+        props.options.length === 0 ? React.createElement(
+            'p',
+            null,
+            'Please insert task'
+        ) : null,
         props.options.map(function (option, index) {
             return React.createElement(Option, { key: index, option: option, onButtonClickDeleteTask: props.onButtonClickDeleteTask });
         }),
@@ -151,6 +156,24 @@ var NoteApp = function (_React$Component2) {
     }
 
     _createClass(NoteApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var json = localStorage.getItem('options');
+            var options = JSON.parse(json);
+
+            if (options) {
+                this.setState({ options: options });
+            }
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.options.length < this.state.options.length) {
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem('options', json);
+            }
+        }
+    }, {
         key: 'onButtonClickDeleteAll',
         value: function onButtonClickDeleteAll() {
             this.setState(function () {

@@ -30,6 +30,7 @@ const Options = (props) => {
     return (
         <div>
             <h2>Options</h2>
+            {props.options.length === 0 ? <p>Please insert task</p> : null}
             {props.options.map((option, index) => {
                 return <Option key={index} option={option} onButtonClickDeleteTask={props.onButtonClickDeleteTask}/>
             })}
@@ -87,6 +88,22 @@ class NoteApp extends React.Component {
         this.onFormSubmitAddOption = this.onFormSubmitAddOption.bind(this)
         this.onButtonClickDeleteTask = this.onButtonClickDeleteTask.bind(this)
         this.state = { options: [] }
+    }
+
+    componentDidMount () {
+        const json = localStorage.getItem('options')
+        const options = JSON.parse(json)
+
+        if (options) {
+            this.setState({ options })
+        }
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+        if (prevState.options.length < this.state.options.length) {
+            const json = JSON.stringify(this.state.options)
+            localStorage.setItem('options', json)
+        }
     }
 
     onButtonClickDeleteAll () {
