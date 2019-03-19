@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18,18 +18,18 @@ var Header = function (_React$Component) {
     }
 
     _createClass(Header, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
                     this.props.title
                 ),
                 React.createElement(
-                    'h2',
+                    "h2",
                     null,
                     this.props.subTitle
                 )
@@ -50,20 +50,18 @@ var Action = function (_React$Component2) {
     }
 
     _createClass(Action, [{
-        key: 'onButtonClick',
-        value: function onButtonClick() {
-            console.log('clicked');
-        }
-    }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'button',
-                    { onClick: this.onButtonClick },
-                    'What Should I do?'
+                    "button",
+                    {
+                        disabled: !this.props.hasOptions,
+                        onClick: this.props.onButtonClickPick
+                    },
+                    "What Should I do?"
                 )
             );
         }
@@ -82,28 +80,23 @@ var Options = function (_React$Component3) {
     }
 
     _createClass(Options, [{
-        key: 'onButtonClickRemoveAll',
-        value: function onButtonClickRemoveAll() {
-            console.log('clicked');
-        }
-    }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h2',
+                    "h2",
                     null,
-                    'Options'
+                    "Options"
                 ),
                 this.props.options.map(function (option, index) {
                     return React.createElement(Option, { key: index, taskName: option });
                 }),
                 React.createElement(
-                    'button',
-                    { onClick: this.onButtonClickRemoveAll },
-                    'Remove All'
+                    "button",
+                    { onClick: this.props.onButtonClickDelete },
+                    "Remove All"
                 )
             );
         }
@@ -122,10 +115,10 @@ var Option = function (_React$Component4) {
     }
 
     _createClass(Option, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 this.props.taskName
             );
@@ -145,7 +138,7 @@ var AddOption = function (_React$Component5) {
     }
 
     _createClass(AddOption, [{
-        key: 'onFormSubmit',
+        key: "onFormSubmit",
         value: function onFormSubmit(e) {
             e.preventDefault();
             if (e.target.elements.task.value) {
@@ -153,24 +146,24 @@ var AddOption = function (_React$Component5) {
             }
         }
     }, {
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h3',
+                    "h3",
                     null,
-                    'Add Options'
+                    "Add Options"
                 ),
                 React.createElement(
-                    'form',
+                    "form",
                     { onSubmit: this.onFormSubmit },
-                    React.createElement('input', { type: 'text', placeholder: 'Add some task', name: 'task' }),
+                    React.createElement("input", { type: "text", placeholder: "Add some task", name: "task" }),
                     React.createElement(
-                        'button',
-                        { type: 'submit' },
-                        'Add Task'
+                        "button",
+                        { type: "submit" },
+                        "Add Task"
                     )
                 )
             );
@@ -183,24 +176,43 @@ var AddOption = function (_React$Component5) {
 var NoteApp = function (_React$Component6) {
     _inherits(NoteApp, _React$Component6);
 
-    function NoteApp() {
+    function NoteApp(props) {
         _classCallCheck(this, NoteApp);
 
-        return _possibleConstructorReturn(this, (NoteApp.__proto__ || Object.getPrototypeOf(NoteApp)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (NoteApp.__proto__ || Object.getPrototypeOf(NoteApp)).call(this, props));
+
+        _this6.onButtonClickDelete = _this6.onButtonClickDelete.bind(_this6);
+        _this6.onButtonClickPick = _this6.onButtonClickPick.bind(_this6);
+        _this6.state = { options: ["Task1", "Task2", "Task3"] };
+        return _this6;
     }
 
     _createClass(NoteApp, [{
-        key: 'render',
+        key: "onButtonClickDelete",
+        value: function onButtonClickDelete() {
+            this.setState(function () {
+                return {
+                    options: []
+                };
+            });
+        }
+    }, {
+        key: "onButtonClickPick",
+        value: function onButtonClickPick() {
+            var random = Math.floor(Math.random() * this.state.options.length);
+            console.log(this.state.options[random]);
+        }
+    }, {
+        key: "render",
         value: function render() {
             var title = "Welcome to Note App";
             var subTitle = "Easier Way to Manage your life";
-            var options = ["Task1", "Task2", "Task3"];
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(Header, { title: title, subTitle: subTitle }),
-                React.createElement(Action, null),
-                React.createElement(Options, { options: options }),
+                React.createElement(Action, { hasOptions: this.state.options.length > 0, onButtonClickPick: this.onButtonClickPick }),
+                React.createElement(Options, { options: this.state.options, onButtonClickDelete: this.onButtonClickDelete }),
                 React.createElement(AddOption, null)
             );
         }

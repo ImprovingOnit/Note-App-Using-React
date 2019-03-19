@@ -14,24 +14,20 @@ class Header extends React.Component {
 
 class Action extends React.Component {
 
-    onButtonClick () {
-        console.log('clicked')
-    }
-
     render () {
         return (
             <div>
-                <button onClick={this.onButtonClick}>What Should I do?</button>
+                <button 
+                    disabled={!this.props.hasOptions} 
+                    onClick={this.props.onButtonClickPick}
+                >
+                What Should I do?</button>
             </div>
         )
     }
 }
 
 class Options extends React.Component {
-
-    onButtonClickRemoveAll () {
-        console.log('clicked')
-    }
 
     render () {
         return (
@@ -40,7 +36,7 @@ class Options extends React.Component {
             {this.props.options.map((option, index) => {
                 return <Option key={index} taskName={option} />
             })}
-            <button onClick={this.onButtonClickRemoveAll}>Remove All</button>
+            <button onClick={this.props.onButtonClickDelete}>Remove All</button>
             </div>
         )
     }
@@ -69,7 +65,7 @@ class AddOption extends React.Component {
                 <h3>Add Options</h3>
                 <form onSubmit={this.onFormSubmit}>
                     <input type="text" placeholder="Add some task" name="task"/>
-                    <button type="submit">Add Task</button>
+                    <button type="submit" >Add Task</button>
                 </form>
             </div>
         )
@@ -77,15 +73,35 @@ class AddOption extends React.Component {
 }
 
 class NoteApp extends React.Component {
+
+    constructor (props) {
+        super(props) 
+        this.onButtonClickDelete = this.onButtonClickDelete.bind(this)
+        this.onButtonClickPick = this.onButtonClickPick.bind(this)
+        this.state = { options: ["Task1", "Task2", "Task3"]}
+    }
+
+    onButtonClickDelete () {
+        this.setState(() => {
+            return {
+                options: []
+            }
+        })
+    }
+
+    onButtonClickPick () {
+        const random = Math.floor((Math.random() * this.state.options.length)) 
+        console.log(this.state.options[random])
+    }
+
     render () {
         const title = "Welcome to Note App"
         const subTitle = "Easier Way to Manage your life"
-        const options = ["Task1", "Task2", "Task3"]
         return (
         <div>
             <Header title={title} subTitle={subTitle}/>
-            <Action />
-            <Options options={options}/>
+            <Action hasOptions={this.state.options.length > 0} onButtonClickPick={this.onButtonClickPick}/>
+            <Options options={this.state.options} onButtonClickDelete={this.onButtonClickDelete}/>
             <AddOption />
         </div>
         )
