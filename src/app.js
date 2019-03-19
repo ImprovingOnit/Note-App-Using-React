@@ -1,53 +1,44 @@
 
 
-class Header extends React.Component {
-    render () {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-                <h2>{this.props.subTitle}</h2>
-            </div>
-        )
-    }
+
+const Header = (props) => {
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            <h2>{props.subTitle}</h2>
+        </div>
+    )
 }
 
-
-class Action extends React.Component {
-
-    render () {
-        return (
-            <div>
-                <button 
-                    disabled={!this.props.hasOptions} 
-                    onClick={this.props.onButtonClickPick}
-                >
-                What Should I do?</button>
-            </div>
-        )
-    }
+const Action = (props) => {
+    return (
+        <div>
+            <button 
+                disabled={!props.hasOptions} 
+                onClick={props.onButtonClickPick}
+            >
+            What Should I do?</button>
+        </div>
+    )
 }
 
-class Options extends React.Component {
-
-    render () {
-        return (
-            <div>
+const Options = (props) => {
+    return (
+        <div>
             <h2>Options</h2>
-            {this.props.options.map((option, index) => {
+            {props.options.map((option, index) => {
                 return <Option key={index} taskName={option} />
             })}
-            <button onClick={this.props.onButtonClickDelete}>Remove All</button>
-            </div>
-        )
-    }
+            <button onClick={props.onButtonClickDelete}>Remove All</button>
+        </div>
+    )
 }
 
-class Option extends React.Component { 
-    render () {
-        return (
-            <div>{this.props.taskName}</div>
-        )
-    }
+
+const Option = (props) => {
+    return (
+        <div>{props.taskName}</div>
+    )
 }
 
 class AddOption extends React.Component { 
