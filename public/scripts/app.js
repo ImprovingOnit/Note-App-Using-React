@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18,20 +18,20 @@ var Header = function (_React$Component) {
     }
 
     _createClass(Header, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'h1',
+                    "h1",
                     null,
-                    'Note-App'
+                    this.props.title
                 ),
                 React.createElement(
-                    'h2',
+                    "h2",
                     null,
-                    'Put your life in the hands of a computer'
+                    this.props.subTitle
                 )
             );
         }
@@ -50,15 +50,15 @@ var Action = function (_React$Component2) {
     }
 
     _createClass(Action, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
                 React.createElement(
-                    'button',
+                    "button",
                     null,
-                    'What Should I do?'
+                    "What Should I do?"
                 )
             );
         }
@@ -77,14 +77,19 @@ var Options = function (_React$Component3) {
     }
 
     _createClass(Options, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
-                'Options',
-                React.createElement(Option, null),
-                React.createElement(Option, null)
+                React.createElement(
+                    "h2",
+                    null,
+                    "Options"
+                ),
+                this.props.options.map(function (option, index) {
+                    return React.createElement(Option, { key: index, taskName: option });
+                })
             );
         }
     }]);
@@ -102,12 +107,12 @@ var Option = function (_React$Component4) {
     }
 
     _createClass(Option, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
-                'Option'
+                this.props.taskName
             );
         }
     }]);
@@ -125,12 +130,12 @@ var AddOption = function (_React$Component5) {
     }
 
     _createClass(AddOption, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             return React.createElement(
-                'div',
+                "div",
                 null,
-                'Add Options'
+                "Add Options"
             );
         }
     }]);
@@ -138,13 +143,33 @@ var AddOption = function (_React$Component5) {
     return AddOption;
 }(React.Component);
 
-var jsx = React.createElement(
-    'div',
-    null,
-    React.createElement(Header, null),
-    React.createElement(Action, null),
-    React.createElement(Options, null),
-    React.createElement(AddOption, null)
-);
+var NoteApp = function (_React$Component6) {
+    _inherits(NoteApp, _React$Component6);
 
-ReactDOM.render(jsx, document.querySelector('#app'));
+    function NoteApp() {
+        _classCallCheck(this, NoteApp);
+
+        return _possibleConstructorReturn(this, (NoteApp.__proto__ || Object.getPrototypeOf(NoteApp)).apply(this, arguments));
+    }
+
+    _createClass(NoteApp, [{
+        key: "render",
+        value: function render() {
+            var title = "Welcome to Note App";
+            var subTitle = "Easier Way to Manage your life";
+            var options = ["Task1", "Task2", "Task3"];
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(Header, { title: title, subTitle: subTitle }),
+                React.createElement(Action, null),
+                React.createElement(Options, { options: options }),
+                React.createElement(AddOption, null)
+            );
+        }
+    }]);
+
+    return NoteApp;
+}(React.Component);
+
+ReactDOM.render(React.createElement(NoteApp, null), document.querySelector('#app'));
