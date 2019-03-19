@@ -13,16 +13,26 @@ class Header extends React.Component {
 
 
 class Action extends React.Component {
+
+    onButtonClick () {
+        console.log('clicked')
+    }
+
     render () {
         return (
             <div>
-                <button>What Should I do?</button>
+                <button onClick={this.onButtonClick}>What Should I do?</button>
             </div>
         )
     }
 }
 
 class Options extends React.Component {
+
+    onButtonClickRemoveAll () {
+        console.log('clicked')
+    }
+
     render () {
         return (
             <div>
@@ -30,6 +40,7 @@ class Options extends React.Component {
             {this.props.options.map((option, index) => {
                 return <Option key={index} taskName={option} />
             })}
+            <button onClick={this.onButtonClickRemoveAll}>Remove All</button>
             </div>
         )
     }
@@ -44,9 +55,23 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component { 
+
+    onFormSubmit (e) {
+        e.preventDefault ()
+        if (e.target.elements.task.value) {
+            console.log('Hello World')
+        }
+    }
+
     render () {
         return (
-            <div>Add Options</div>
+            <div>
+                <h3>Add Options</h3>
+                <form onSubmit={this.onFormSubmit}>
+                    <input type="text" placeholder="Add some task" name="task"/>
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
         )
     }
 }

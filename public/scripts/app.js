@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18,18 +18,18 @@ var Header = function (_React$Component) {
     }
 
     _createClass(Header, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "h1",
+                    'h1',
                     null,
                     this.props.title
                 ),
                 React.createElement(
-                    "h2",
+                    'h2',
                     null,
                     this.props.subTitle
                 )
@@ -50,15 +50,20 @@ var Action = function (_React$Component2) {
     }
 
     _createClass(Action, [{
-        key: "render",
+        key: 'onButtonClick',
+        value: function onButtonClick() {
+            console.log('clicked');
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "button",
-                    null,
-                    "What Should I do?"
+                    'button',
+                    { onClick: this.onButtonClick },
+                    'What Should I do?'
                 )
             );
         }
@@ -77,19 +82,29 @@ var Options = function (_React$Component3) {
     }
 
     _createClass(Options, [{
-        key: "render",
+        key: 'onButtonClickRemoveAll',
+        value: function onButtonClickRemoveAll() {
+            console.log('clicked');
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(
-                    "h2",
+                    'h2',
                     null,
-                    "Options"
+                    'Options'
                 ),
                 this.props.options.map(function (option, index) {
                     return React.createElement(Option, { key: index, taskName: option });
-                })
+                }),
+                React.createElement(
+                    'button',
+                    { onClick: this.onButtonClickRemoveAll },
+                    'Remove All'
+                )
             );
         }
     }]);
@@ -107,10 +122,10 @@ var Option = function (_React$Component4) {
     }
 
     _createClass(Option, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
                 this.props.taskName
             );
@@ -130,12 +145,34 @@ var AddOption = function (_React$Component5) {
     }
 
     _createClass(AddOption, [{
-        key: "render",
+        key: 'onFormSubmit',
+        value: function onFormSubmit(e) {
+            e.preventDefault();
+            if (e.target.elements.task.value) {
+                console.log('Hello World');
+            }
+        }
+    }, {
+        key: 'render',
         value: function render() {
             return React.createElement(
-                "div",
+                'div',
                 null,
-                "Add Options"
+                React.createElement(
+                    'h3',
+                    null,
+                    'Add Options'
+                ),
+                React.createElement(
+                    'form',
+                    { onSubmit: this.onFormSubmit },
+                    React.createElement('input', { type: 'text', placeholder: 'Add some task', name: 'task' }),
+                    React.createElement(
+                        'button',
+                        { type: 'submit' },
+                        'Add Task'
+                    )
+                )
             );
         }
     }]);
@@ -153,13 +190,13 @@ var NoteApp = function (_React$Component6) {
     }
 
     _createClass(NoteApp, [{
-        key: "render",
+        key: 'render',
         value: function render() {
             var title = "Welcome to Note App";
             var subTitle = "Easier Way to Manage your life";
             var options = ["Task1", "Task2", "Task3"];
             return React.createElement(
-                "div",
+                'div',
                 null,
                 React.createElement(Header, { title: title, subTitle: subTitle }),
                 React.createElement(Action, null),
