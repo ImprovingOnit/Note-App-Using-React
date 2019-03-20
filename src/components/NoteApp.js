@@ -68,7 +68,7 @@ export default class NoteApp extends React.Component {
 
     render () {
         const title = "Welcome to Note App"
-        const subTitle = "Easier Way to Manage your life"
+        const subTitle = "Easier way to manage your life"
         return (
         <div>
             <Header title={title} subTitle={subTitle}/>
