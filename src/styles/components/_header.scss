@@ -1,18 +1,18 @@
 .header {
-    background: #20222b;
-    margin-bottom: 4.8rem;
+    background: $black;
+    margin-bottom: $xl-size;
     color: white;
-    padding: 1.6rem 0;
+    padding: $m-size 0;
 
     &__title {
-        font-size: 3.2rem;
+        font-size: $l-size;
         margin: 0;
 
     }
 
     &__subtitle {
-        color: #a5afd7;
-        font-size: 1.6rem;
+        color: $white;
+        font-size: $m-size;
         font-weight: 500;
         margin: 0;
     }

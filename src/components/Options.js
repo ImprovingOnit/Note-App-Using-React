@@ -4,12 +4,14 @@ import Option from './Option'
 const Options = (props) => {
     return (
         <div>
-            <h2>Options</h2>
-            {props.options.length === 0 ? <p>Please insert task</p> : null}
+            <div className="opts-box-header">
+                <h2 className="opts-box-header__title">Options</h2>
+                <button className="button button--link" onClick={props.onButtonClickDeleteAll}>Remove All</button>
+            </div>
+            {props.options.length === 0 ? <p className="opts-box__message">Please insert your wonderful task</p> : null}
             {props.options.map((option, index) => {
-                return <Option key={index} option={option} onButtonClickDeleteTask={props.onButtonClickDeleteTask}/>
+                return <Option key={index} count={index + 1} option={option} onButtonClickDeleteTask={props.onButtonClickDeleteTask}/>
             })}
-            <button onClick={props.onButtonClickDeleteAll}>Remove All</button>
         </div>
     )
 }

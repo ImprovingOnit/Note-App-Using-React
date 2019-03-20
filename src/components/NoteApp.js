@@ -72,12 +72,16 @@ export default class NoteApp extends React.Component {
         return (
         <div>
             <Header title={title} subTitle={subTitle}/>
-            <Action hasOptions={this.state.options.length > 0} onButtonClickPick={this.onButtonClickPick}/>
-            <Options options={this.state.options} 
-                        onButtonClickDeleteAll={this.onButtonClickDeleteAll}
-                            onButtonClickDeleteTask={this.onButtonClickDeleteTask}
-                                />
-            <AddOption onFormSubmitAddOption={this.onFormSubmitAddOption}/>
+            <div className="container">
+                <Action hasOptions={this.state.options.length > 0} onButtonClickPick={this.onButtonClickPick}/>
+                <div className="opts-box">
+                    <Options options={this.state.options} 
+                                onButtonClickDeleteAll={this.onButtonClickDeleteAll}
+                                    onButtonClickDeleteTask={this.onButtonClickDeleteTask}
+                                        />
+                    <AddOption onFormSubmitAddOption={this.onFormSubmitAddOption}/>
+                </div>
+            </div>
             <OptionModal selectedOption={this.state.selectedOption}
                             onButtonClickClearSelectedOption={this.onButtonClickClearSelectedOption} 
                                 />
