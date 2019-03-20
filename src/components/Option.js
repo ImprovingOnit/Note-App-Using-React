@@ -3,8 +3,11 @@ import React from 'react'
 const Option = (props) => {
     return (
         <div className="option">
-           {props.option}
-            <button onClick={() => props.onButtonClickDeleteTask(props.option)}>Remove</button>
+            <p className="option__text">{props.count}. {props.option}</p>
+            <button 
+                onClick={() => props.onButtonClickDeleteTask(props.option)}
+                    className="button button--link"
+                >Remove</button>
         </div>
     )
 }
