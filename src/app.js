@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import NoteApp from './components/NoteApp'
+import './styles/styles.scss'
 
 const Layout = () => {
     return (
