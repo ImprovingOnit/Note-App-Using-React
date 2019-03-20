@@ -1,5 +1,5 @@
 {
-  "name": "Note-React-App",
+  "name": "note-react-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -21,6 +21,7 @@
     "babel-preset-react": "^6.24.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-modal": "^3.8.1",
     "webpack": "^3.12.0"
   },
   "devDependencies": {

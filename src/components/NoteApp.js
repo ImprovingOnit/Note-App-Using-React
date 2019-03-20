@@ -4,10 +4,11 @@ import Action from './Action'
 import AddOption from './AddOption'
 import Header from './Header'
 import Options from './Options'
+import OptionModal from './OptionModal'
 
 export default class NoteApp extends React.Component {
 
-    state = { options: [] }
+    state = { options: [], selectedOption: undefined }
 
     componentDidMount () {
         const json = localStorage.getItem('options')
@@ -46,7 +47,8 @@ export default class NoteApp extends React.Component {
 
     onButtonClickPick = () => {
         const random = Math.floor((Math.random() * this.state.options.length)) 
-        console.log(this.state.options[random])
+        const option = this.state.options[random]
+        this.setState({ selectedOption: option })
     }
 
     onFormSubmitAddOption = (option) => {
@@ -58,6 +60,10 @@ export default class NoteApp extends React.Component {
         this.setState(prevState => {
             return { options: prevState.options.concat(option) }
         })
+    }
+
+    onButtonClickClearSelectedOption = () => {
+        this.setState({ selectedOption: undefined })
     }
 
     render () {
@@ -72,6 +78,9 @@ export default class NoteApp extends React.Component {
                             onButtonClickDeleteTask={this.onButtonClickDeleteTask}
                                 />
             <AddOption onFormSubmitAddOption={this.onFormSubmitAddOption}/>
+            <OptionModal selectedOption={this.state.selectedOption}
+                            onButtonClickClearSelectedOption={this.onButtonClickClearSelectedOption} 
+                                />
         </div>
         )
     }
